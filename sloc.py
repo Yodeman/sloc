@@ -5,9 +5,9 @@ class Lines_Sloc():
     Calculate the total numbers of lines and total
     sloc of files at and below a given directory.
     """
-    def __init__(self, start_dir, dependencies=[]):
+    def __init__(self, start_dir, exclude=[]):
         self.start = start_dir
-        self.dependencies = dependencies
+        self.exclude = exclude # file types to exclude
         self.vfiles = 0
         self.exts = {}
 
@@ -36,7 +36,7 @@ class Lines_Sloc():
                 doc = f.readlines()
                 lines = len(doc)
                 sloc = len([i for i in doc if not i.isspace()])
-            if exts in self.dependencies:
+            if exts in self.exclude:
                 print(f'\nSkipping {fpath}\n')
             elif exts in self.exts:
                 self.exts[exts]['lines'] += lines
